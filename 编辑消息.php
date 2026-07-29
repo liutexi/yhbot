@@ -1,0 +1,52 @@
+<?php
+//官方文档https://www.yhchat.com/document/400-437
+function editMessage($token, $msgId, $recvId, $recvType, $contentType, $content, $buttons = null) {
+    $url = "https://chat-go.jwzhd.com/open-apis/v1/bot/edit?token=" . $token;
+    
+    $payload = [
+        'msgId' => $msgId,
+        'recvId' => $recvId,
+        'recvType' => $recvType,
+        'contentType' => $contentType,
+        'content' => $content
+    ];
+    
+    if ($buttons !== null) {
+        $payload['content']['buttons'] = $buttons;
+    }
+    
+    $ch = curl_init($url);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt($ch, CURLOPT_POST, true);
+    curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($payload));
+    curl_setopt($ch, CURLOPT_HTTPHEADER, ['Content-Type: application/json; charset=utf-8']);
+    
+    $response = curl_exec($ch);
+    $error = curl_error($ch);
+    curl_close($ch);
+    
+    if ($error) {
+        return ['code' => -1, 'msg' => $error];
+    }
+    
+    return json_decode($response, true);
+}
+
+// 使用示例
+$result = editMessage(
+    'xxxxxxxxxx',
+    'xxxxxxx',
+    '7058262',
+    'user',
+    'text',
+    ['text' => '这里是编辑后的消息内容'],
+    [
+        [
+            ['text' => '复制', 'actionType' => 2, 'value' => 'xxxx'],
+            ['text' => '点击跳转', 'actionType' => 1, 'url' => 'http://www.baidu.com']
+        ]
+    ]
+);
+
+print_r($result);
+?>
