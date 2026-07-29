@@ -1,4 +1,5 @@
 <?php
+//参照官方文档https://www.yhchat.com/document/400-421
 function batchSendMessage($token, $recvIds, $recvType, $contentType, $content, $buttons = null) {
     $url = "https://chat-go.jwzhd.com/open-apis/v1/bot/batch_send?token=" . $token;
     
