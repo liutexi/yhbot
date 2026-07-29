@@ -1,5 +1,5 @@
 <?php
-//参照换房子https://www.yhchat.com/document/400-437
+//参照官方https://www.yhchat.com/document/400-437
 function editMessage($token, $msgId, $recvId, $recvType, $contentType, $content, $buttons = null) {
     $url = "https://chat-go.jwzhd.com/open-apis/v1/bot/edit?token=" . $token;
     
